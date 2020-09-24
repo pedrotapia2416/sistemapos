@@ -1,203 +1,197 @@
 <?php
 
-class ControladorProveedores{
+  class ControladorProveedores{
 
-	/*=============================================
-	CREAR PROVEEDORES
-	=============================================*/
 
-	static public function ctrCrearProveedor(){
+ /*==== CREAR PROVEEDOR ====*/
 
-		if(isset($_POST["nuevoProveedor"])){
+    static public function ctrCrearProveedor(){
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoProveedor"]) &&
-			   preg_match('/^[0-9]+$/', $_POST["nuevoCUITId"]) &&
-			   preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["nuevoEmailProveedor"]) &&
-			   preg_match('/^[()\-0-9 ]+$/', $_POST["nuevoTelefonoProveedor"]) &&
-			   preg_match('/^[#\.\-a-zA-Z0-9 ]+$/', $_POST["nuevaDireccionProveedor"])){
+          	if(isset($_POST["nuevoProveedor"])){
 
-			   	$tabla = "proveedores";
+              if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nuevoProveedor"]) &&
+                 preg_match('/^[0-9]+$/', $_POST["nuevoCuitId"]) &&
+                 preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["nuevoEmail"]) &&
+                 preg_match('/^[()\-0-9 ]+$/', $_POST["nuevoTelefono"]) &&
+                 preg_match('/^[#\.\-a-zA-Z0-9 ]+$/', $_POST["nuevaDireccion"]) &&
+                 preg_match('/^[#\.\-a-zA-Z0-9 ]+$/', $_POST["nuevaConsignacion"])){
 
-			   	$datos = array("nombre"=>$_POST["nuevoProveedor"],
-					           "cuit"=>$_POST["nuevoCUITId"],
-					           "email"=>$_POST["nuevoEmailProveedor"],
-					           "telefono"=>$_POST["nuevoTelefonoProveedor"],
-					           "direccion"=>$_POST["nuevaDireccionProveedor"]);
+                  $tabla = "proveedores";
 
-			   	$respuesta = ModeloProveedores::mdlIngresarProveedor($tabla, $datos);
+                  $datos = array("nombre"=>$_POST["nuevoProveedor"],
+                             "cuit"=>$_POST["nuevoCuitId"],
+                             "email"=>$_POST["nuevoEmail"],
+                             "telefono"=>$_POST["nuevoTelefono"],
+                             "direccion"=>$_POST["nuevaDireccion"],
+                             "consignacion"=>$_POST["nuevaConsignacion"]);
 
-			   	if($respuesta == "ok"){
+                  $respuesta = ModeloProveedores::mdlIngresarProveedor($tabla, $datos);
 
-					echo'<script>
+                  if($respuesta == "ok"){
 
-					swal({
-						  type: "success",
-						  title: "El proveedor ha sido guardado correctamente",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-									if (result.value) {
+                  echo'<script>
 
-									window.location = "proveedores";
+                  swal({
+                      type: "success",
+                      title: "El proveedor ha sido guardado correctamente",
+                      showConfirmButton: true,
+                      confirmButtonText: "Cerrar"
+                      }).then(function(result){
+                          if (result.value) {
 
-									}
-								})
+                          window.location = "proveedores";
 
-					</script>';
+                          }
+                        })
 
-				}
+                  </script>';
 
-			}else{
+                }
 
-				echo'<script>
+              }else{
 
-					swal({
-						  type: "error",
-						  title: "¡El proveedor no puede ir vacío o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-							if (result.value) {
+                echo'<script>
 
-							window.location = "proveedores";
+                  swal({
+                      type: "error",
+                      title: "¡El proveedor no puede ir vacío o llevar caracteres especiales!",
+                      showConfirmButton: true,
+                      confirmButtonText: "Cerrar"
+                      }).then(function(result){
+                      if (result.value) {
 
-							}
-						})
+                      window.location = "proveedores";
 
-			  	</script>';
+                      }
+                    })
 
+                  </script>';
 
+              }
+            }
 
-			}
+    }
+    /*=============================================
+  	MOSTRAR PROVEEDORES
+  	=============================================*/
 
-		}
+  	static public function ctrMostrarProveedores($item, $valor){
 
-	}
+  		$tabla = "proveedores";
 
-	/*=============================================
-	MOSTRAR CLIENTES
-	=============================================*/
+  		$respuesta = ModeloProveedores::mdlMostrarProveedores($tabla, $item, $valor);
 
-	static public function ctrMostrarProveedores($item, $valor){
+  		return $respuesta;
 
-		$tabla = "proveedores";
+  	}
 
-		$respuesta = ModeloProveedores::mdlMostrarProveedores($tabla, $item, $valor);
+    /*==== EDITAR PROVEEDORES ====*/
 
-		return $respuesta;
+       static public function ctrEditarProveedor(){
 
-	}
+               if(isset($_POST["editarProveedor"])){
 
-	/*=============================================
-	EDITAR CLIENTE
-	=============================================*/
+                 if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarProveedor"]) &&
+                    preg_match('/^[0-9]+$/', $_POST["editarCuitId"]) &&
+                    preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["editarEmail"]) &&
+                    preg_match('/^[()\-0-9 ]+$/', $_POST["editarTelefono"]) &&
+                    preg_match('/^[#\.\-a-zA-Z0-9 ]+$/', $_POST["editarDireccion"]) &&
+                    preg_match('/^[#\.\-a-zA-Z0-9 ]+$/', $_POST["editarConsignacion"])){
 
-	static public function ctrEditarProveedor(){
+                     $tabla = "proveedores";
 
-		if(isset($_POST["editarProveedor"])){
+                     $datos = array("id"=>$_POST["idProveedor"],
+                                "nombre"=>$_POST["editarProveedor"],
+                                "cuit"=>$_POST["editarCuitId"],
+                                "email"=>$_POST["editarEmail"],
+                                "telefono"=>$_POST["editarTelefono"],
+                                "direccion"=>$_POST["editarDireccion"],
+                                "consignacion"=>$_POST["editarConsignacion"]);
 
-			if(preg_match('/^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["editarProveedor"]) &&
-			   preg_match('/^[0-9]+$/', $_POST["editarCUITId"]) &&
-			   preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["editarEmailProveedor"]) &&
-			   preg_match('/^[()\-0-9 ]+$/', $_POST["editarTelefonoProveedor"]) &&
-			   preg_match('/^[#\.\-a-zA-Z0-9 ]+$/', $_POST["editarDireccionProveedor"])){
+                     $respuesta = ModeloProveedores::mdlEditarProveedor($tabla, $datos);
 
-			   	$tabla = "proveedores";
+                     if($respuesta == "ok"){
 
-			   	$datos = array("id"=>$_POST["idProveedor"],
-			   				   "nombre"=>$_POST["editarProveedor"],
-					           "documento"=>$_POST["editarCUITId"],
-					           "email"=>$_POST["editarEmailProveedor"],
-					           "telefono"=>$_POST["editarTelefonoProveedor"],
-					           "direccion"=>$_POST["editarDireccionProveedor"]);
+                     echo'<script>
 
-			   	$respuesta = ModeloProvedores::mdlEditarProveedor($tabla, $datos);
+                     swal({
+                         type: "success",
+                         title: "El proveedor ha sido guardado correctamente",
+                         showConfirmButton: true,
+                         confirmButtonText: "Cerrar"
+                         }).then(function(result){
+                             if (result.value) {
 
-			   	if($respuesta == "ok"){
+                             window.location = "proveedores";
 
-					echo'<script>
+                             }
+                           })
 
-					swal({
-						  type: "success",
-						  title: "El Proveedor ha sido cambiado correctamente",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-									if (result.value) {
+                     </script>';
 
-									window.location = "proveedor";
+                   }
 
-									}
-								})
+                 }else{
 
-					</script>';
+                   echo'<script>
 
-				}
+                     swal({
+                         type: "error",
+                         title: "¡El proveedor no puede ir vacío o llevar caracteres especiales!",
+                         showConfirmButton: true,
+                         confirmButtonText: "Cerrar"
+                         }).then(function(result){
+                         if (result.value) {
 
-			}else{
+                         window.location = "proveedores";
 
-				echo'<script>
+                         }
+                       })
 
-					swal({
-						  type: "error",
-						  title: "¡El Proveedor no puede ir vacío o llevar caracteres especiales!",
-						  showConfirmButton: true,
-						  confirmButtonText: "Cerrar"
-						  }).then(function(result){
-							if (result.value) {
+                     </script>';
 
-							window.location = "proveedores";
+                 }
 
-							}
-						})
+               }
 
-			  	</script>';
+          }
 
+                 /*=============================================
+               	ELIMINAR PROVEEDOR
+               	=============================================*/
 
+               	static public function ctrEliminarProveedor(){
 
-			}
+               		if(isset($_GET["idProveedor"])){
 
-		}
+               			$tabla ="proveedores";
+               			$datos = $_GET["idProveedor"];
 
-	}
+               			$respuesta = ModeloProveedores::mdlEliminarProveedor($tabla, $datos);
 
-	/*=============================================
-	ELIMINAR CLIENTE
-	=============================================*/
+               			if($respuesta == "ok"){
 
-	static public function ctrEliminarProveedor(){
+               				echo'<script>
 
-		if(isset($_GET["idProveedor"])){
+               				swal({
+               					  type: "success",
+               					  title: "El proveedor ha sido borrado correctamente",
+               					  showConfirmButton: true,
+               					  confirmButtonText: "Cerrar",
+               					  closeOnConfirm: false
+               					  }).then(function(result){
+               								if (result.value) {
 
-			$tabla ="proveedor";
-			$datos = $_GET["idProveedor"];
+               								window.location = "proveedores";
 
-			$respuesta = ModeloProveedores::mdlEliminarProveedores($tabla, $datos);
+               								}
+               							})
 
-			if($respuesta == "ok"){
+               				</script>';
 
-				echo'<script>
+               			}
 
-				swal({
-					  type: "success",
-					  title: "El proveedor ha sido borrado correctamente",
-					  showConfirmButton: true,
-					  confirmButtonText: "Cerrar",
-					  closeOnConfirm: false
-					  }).then(function(result){
-								if (result.value) {
+               		}
 
-								window.location = "proveedor";
-
-								}
-							})
-
-				</script>';
-
-			}
-
-		}
-
-	}
-
-}
+               	}
+               }
