@@ -58,7 +58,7 @@ class ModeloProductos{
 		}else{
 
 			return "error";
-		
+
 		}
 
 		$stmt->close();
@@ -88,7 +88,7 @@ class ModeloProductos{
 		}else{
 
 			return "error";
-		
+
 		}
 
 		$stmt->close();
@@ -109,10 +109,10 @@ class ModeloProductos{
 		if($stmt -> execute()){
 
 			return "ok";
-		
+
 		}else{
 
-			return "error";	
+			return "error";
 
 		}
 
@@ -136,10 +136,10 @@ class ModeloProductos{
 		if($stmt -> execute()){
 
 			return "ok";
-		
+
 		}else{
 
-			return "error";	
+			return "error";
 
 		}
 
@@ -151,7 +151,7 @@ class ModeloProductos{
 
 	/*=============================================
 	MOSTRAR SUMA VENTAS
-	=============================================*/	
+	=============================================*/
 
 	static public function mdlMostrarSumaVentas($tabla){
 

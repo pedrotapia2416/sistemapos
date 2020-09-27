@@ -6,6 +6,9 @@ require_once "../modelos/productos.modelo.php";
 require_once "../controladores/categorias.controlador.php";
 require_once "../modelos/categorias.modelo.php";
 
+require_once "../controladores/proveedores.controlador.php";
+require_once "../modelos/proveedores.modelo.php";
+
 class AjaxProductos{
 
   /*=============================================
@@ -28,7 +31,7 @@ class AjaxProductos{
 
   /*=============================================
   EDITAR PRODUCTO
-  =============================================*/ 
+  =============================================*/
 
   public $idProducto;
   public $traerProductos;
@@ -79,7 +82,7 @@ class AjaxProductos{
 
 /*=============================================
 GENERAR CÓDIGO A PARTIR DE ID CATEGORIA
-=============================================*/	
+=============================================*/
 
 if(isset($_POST["idCategoria"])){
 
@@ -90,7 +93,7 @@ if(isset($_POST["idCategoria"])){
 }
 /*=============================================
 EDITAR PRODUCTO
-=============================================*/ 
+=============================================*/
 
 if(isset($_POST["idProducto"])){
 
@@ -102,7 +105,7 @@ if(isset($_POST["idProducto"])){
 
 /*=============================================
 TRAER PRODUCTO
-=============================================*/ 
+=============================================*/
 
 if(isset($_POST["traerProductos"])){
 
@@ -114,7 +117,7 @@ if(isset($_POST["traerProductos"])){
 
 /*=============================================
 TRAER PRODUCTO
-=============================================*/ 
+=============================================*/
 
 if(isset($_POST["nombreProducto"])){
 
@@ -123,9 +126,3 @@ if(isset($_POST["nombreProducto"])){
   $traerProductos -> ajaxEditarProducto();
 
 }
-
-
-
-
-
-
